@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolKit:Popup 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolKit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewModel="clr-namespace:HeladosApp.ViewModels"
+    x:Class="HeladosApp.Controls.ControlCambiarContraseña"
+    x:DataType="viewModel:CambiarContraseñaViewModel">
+
+    <Grid RowDefinitions="Auto, Auto"
+          RowSpacing="10"
+          BackgroundColor="Black">
+
+        <Grid Grid.Row="0"
+              ColumnDefinitions="*, auto"
+              BackgroundColor="Black"
+              Padding="10, 5"
+              HeightRequest="40">
+
+            <Label Grid.Column="0"
+                   Text="Cambiar Contraseña"
+                   TextColor="DeepPink"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Start"/>
+
+            <Label Grid.Column="2"
+                   Text="X"
+                   TextColor="Red"
+                   FontSize="20"
+                  FontAttributes="Bold"
+                   BackgroundColor="Black"
+                   Padding="10, 5"
+                   HorizontalOptions="End"
+                   VerticalOptions="Center">
+
+                <Label.GestureRecognizers>
+                    
+                    <TapGestureRecognizer Tapped="CerrarPopup_Tapped"/>
+
+                </Label.GestureRecognizers>
+                
+            </Label>
+        </Grid>
+
+        <VerticalStackLayout Grid.Row="1"
+                             Padding="10"
+                             VerticalOptions="Center"
+                             Spacing="10"
+                             BackgroundColor="Black">
+
+            <Entry Text="{Binding ContraseñaVieja}"
+                   Placeholder="Contraseña antigua."
+                   IsPassword="True"
+                   TextColor="LightPink"/>
+
+            <Entry Text="{Binding ContraseñaNueva}"
+                   Placeholder="Contraseña nueva."
+                   IsPassword="True"
+                   TextColor="LightPink"/>
+
+            <Entry Text="{Binding ConfirmarNuevaContraseña}"
+                   Placeholder="Confirmar nueva Contraseña."
+                   IsPassword="True"
+                   TextColor="LightPink"/>
+
+            <Button Text="Cambiar Contraseña."
+                    Command="{Binding CambiarContraseñaCommand}"
+                    IsEnabled="{Binding PuedeCambiarLaContraseña}"/>
+
+
+        </VerticalStackLayout>
+
+    </Grid>
+    
+    
+    
+</toolKit:Popup>

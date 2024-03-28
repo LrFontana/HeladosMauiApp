@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="HeladosApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:HeladosApp"
+    xmlns:paginas="clr-namespace:HeladosApp.Pages"
+    xmlns:toolKit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Shell.FlyoutBehavior="Flyout"
+    Title="HeladosApp">
+
+    <Shell.Behaviors>
+        <toolKit:StatusBarBehavior StatusBarColor="DeepPink"
+                                   StatusBarStyle="LightContent"/>
+
+    </Shell.Behaviors>
+
+    <!--<ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" />-->
+
+    <ShellContent ContentTemplate="{DataTemplate paginas:PaginaDeAcople}"
+                  Shell.FlyoutBehavior="Disabled"
+                  Shell.FlyoutItemIsVisible="False"
+                  Route="PaginaDeAcople"/>
+
+    <TabBar FlyoutDisplayOptions="AsMultipleItems">
+        <ShellContent            
+            Title="Inicio"
+            Icon="inicio.png"
+            ContentTemplate="{DataTemplate paginas:PaginaInicio}"
+            Route="PaginaInicio" />
+        <ShellContent            
+            Title="Carrito"
+            Icon="carrito.png"
+            ContentTemplate="{DataTemplate paginas:PaginaCarrito}"
+            Route="PaginaCarrito" />
+        <ShellContent
+            Title="Perfil"
+            Icon="usuario.png"            
+            ContentTemplate="{DataTemplate paginas:PaginaPerfiles}"
+            Route="PaginaPerfiles" /> 
+    </TabBar>
+
+    <MenuItem IconImageSource="salir.png" 
+              Text="Cerrar Sesion."
+              Clicked="CerrarSesion_Clicked"/>
+
+    <Shell.ItemTemplate>
+        
+        <DataTemplate>
+
+            <Grid ColumnDefinitions="Auto, *, Auto"
+                  Padding="10"
+                  ColumnSpacing="15"
+                  RowSpacing="5"
+                  RowDefinitions="Auto, Auto">
+
+                <Image Grid.Column="0"
+                       Grid.Row="0"
+                       Source="{Binding FlyoutIcon}"
+                       HeightRequest="24"
+                       WidthRequest="24">
+
+                    <Image.Behaviors>
+                        <toolKit:IconTintColorBehavior TintColor="DeepPink"/>
+                    </Image.Behaviors>
+
+                </Image>
+
+                <Label Grid.Column="1"
+                       Grid.Row="0"
+                       Text="{Binding Title}"
+                       TextColor="DeepPink"
+                       FontSize="16"/>
+
+                <Image Grid.Column="2"
+                       Grid.Row="0"
+                       Source="flecha_derecha.png"
+                       WidthRequest="24">
+
+                    <Image.Behaviors>
+                        <toolKit:IconTintColorBehavior TintColor="DeepPink"/>
+                    </Image.Behaviors>
+
+                </Image>
+
+                <BoxView Grid.Row="1"
+                         Grid.ColumnSpan="3"
+                         HeightRequest="1"
+                         Color="Pink"/>
+
+            </Grid>
+            
+        </DataTemplate>
+        
+    </Shell.ItemTemplate>
+
+    <Shell.MenuItemTemplate>
+
+        <DataTemplate>
+
+            <Grid ColumnDefinitions="Auto, *"
+                  Padding="10"
+                  ColumnSpacing="15"
+                  RowSpacing="5">
+
+                <Image Grid.Column="0"
+                       Grid.Row="0"
+                       Source="{Binding Icon}"
+                       HeightRequest="24"
+                       WidthRequest="24">
+
+                    <Image.Behaviors>
+                        <toolKit:IconTintColorBehavior TintColor="DeepPink"/>
+                    </Image.Behaviors>
+                    
+                </Image>
+
+                <Label Grid.Column="1"
+                       Grid.Row="0"
+                       Text="{Binding Text}"
+                       TextColor="DeepPink"
+                       FontSize="16"/>
+            </Grid>
+
+        </DataTemplate>
+    </Shell.MenuItemTemplate>
+
+    <Shell.FlyoutHeader>
+
+        <Border BackgroundColor="MediumPurple"
+                Padding="10"
+                StrokeThickness="0">
+
+            <VerticalStackLayout HorizontalOptions="Center"
+                                 Spacing="10">
+                
+                <Image Source="logo.png"
+                       HeightRequest="150"
+                       WidthRequest="150"
+                       HorizontalOptions="Center"/>
+
+                <Label Text="Molly's ice cream"
+                       HorizontalOptions="Center"
+                       FontSize="16"
+                       TextColor="White"
+                       TextTransform="Uppercase"
+                       FontAttributes="Bold"/>
+
+            </VerticalStackLayout>
+            
+        </Border>
+        
+    </Shell.FlyoutHeader>
+
+    <Shell.FlyoutFooter>
+
+        <Border BackgroundColor="MediumPurple"
+                StrokeThickness="0"
+                Padding="10">
+
+            <Label Text="Desarrollado por Leandro Fontana."
+                   TextColor="White"
+                   FontSize="15"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"/>
+
+            <Border.GestureRecognizers>
+
+                <TapGestureRecognizer Tapped="TapLabelDesarrolladoPor_Tapped"
+                                      />
+            </Border.GestureRecognizers>
+            
+        </Border>
+        
+    </Shell.FlyoutFooter>
+
+</Shell>

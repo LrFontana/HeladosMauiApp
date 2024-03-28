@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:HeladosApp.ViewModels"
+             xmlns:dto="clr-namespace:HeladosMaui.Base.DTOs;assembly=HeladosMaui.Base"
+             xmlns:toolKit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="HeladosApp.Pages.PaginaOrden"
+             Title="Mis Pedidos."
+             x:DataType="viewModel:OrdenViewModel"
+             Background="Black">
+
+
+    <RefreshView Command="{Binding CarganOrdenCommand}" IsRefreshing="{Binding EstaDisponible}">
+        <Grid>
+
+            <ScrollView Padding="10">
+                
+                <CollectionView ItemsSource="{Binding Ordenes}">
+                    
+                    <CollectionView.ItemTemplate>
+                        
+                        <DataTemplate x:DataType="dto:OrdenDto">
+
+                            <Border StrokeShape="RoundRectangle 10"
+                                    BackgroundColor="White"
+                                    Margin="0, 4"
+                                    Padding="10"
+                                    StrokeThickness="0">
+
+                                <Grid ColumnDefinitions="*, Auto, Auto"
+                                      ColumnSpacing="10">
+
+                                    <Grid Grid.Column="0"
+                                          RowDefinitions="*, Auto"
+                                          RowSpacing="2">
+
+                                        <Label Grid.Row="0"
+                                               Text="{Binding Id, StringFormat='Pedido N°: {0}'}"
+                                               TextColor="DeepPink"
+                                               FontSize="15"/>
+
+                                        <Label Grid.Row="1"
+                                               Text="{Binding MostrarCantidadDeItems}"
+                                               FontSize="13"/>
+
+                                    </Grid>
+
+                                    <Grid Grid.Column="1"
+                                          RowDefinitions="*, *"
+                                          RowSpacing="2">
+
+                                        <Label Grid.Row="0"
+                                               Text="{Binding PrecioTotal, StringFormat='{0:C}'}"
+                                               TextColor="DeepPink"
+                                               FontSize="15"
+                                               FontAttributes="Bold"
+                                               HorizontalOptions="End"/>          
+
+                                        <Label Grid.Row="1"
+                                               Text="{Binding FechaOrden, StringFormat='{0: MMM dd yyyy, hh:mm}'}"
+                                               FontSize="13"/>
+
+                                    </Grid>
+
+                                    <Image Grid.Column="2"
+                                           Source="flecha_derecha.png"
+                                           VerticalOptions="Center">
+                                        <Image.Behaviors>
+                                            <toolKit:IconTintColorBehavior TintColor="DeepPink"/>
+                                        </Image.Behaviors>
+                                        
+                                    </Image>
+
+                                </Grid>
+
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewModel:OrdenViewModel}}, Path=IrAPaginaDetalleDeOrdenCommand}"
+                                                          CommandParameter="{Binding Id}"/>
+                                </Border.GestureRecognizers>
+                                
+                            </Border>
+                            
+                        </DataTemplate>
+                        
+                    </CollectionView.ItemTemplate>
+                    
+                </CollectionView>               
+    
+            </ScrollView>
+
+            <ActivityIndicator IsRunning="{Binding EstaDisponible}"/>
+
+        </Grid>
+    </RefreshView>
+    
+</ContentPage>

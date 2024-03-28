@@ -1,0 +1,6 @@
+@HeladosMaui.Api_HostAddress = http://localhost:5037
+
+GET {{HeladosMaui.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

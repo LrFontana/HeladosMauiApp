@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:HeladosApp.ViewModels"    
+             xmlns:dto="clr-namespace:HeladosMaui.Base.DTOs;assembly=HeladosMaui.Base"
+             x:Class="HeladosApp.Pages.PaginaDetalleDeOrden"
+             x:DataType="viewModel:DetallesOrdenViewModel"
+             Title="{Binding Titulo}"
+             BackgroundColor="Black">
+
+
+    <Grid>
+
+        <ScrollView Padding="10">
+
+            <CollectionView ItemsSource="{Binding OrdenItems}">
+
+                <CollectionView.ItemTemplate>
+
+                    <DataTemplate x:DataType="dto:OrdenItemDto">
+
+                        <StackLayout BackgroundColor="LightPink"
+                                     Padding="0, 0, 0, 1"
+                                     Margin="0, 5">
+
+                            <StackLayout BackgroundColor="Black"
+                                         Padding="10">
+
+                                <Grid ColumnDefinitions="40, *, Auto">
+
+                                    <Label Grid.Column="0"
+                                           Text="{Binding Cantidad}"
+                                           VerticalOptions="Center"
+                                           TextColor="DeepPink"
+                                           FontSize="16"
+                                           FontAttributes="Bold"/>
+
+                                    <VerticalStackLayout Grid.Column="1"
+                                                         Spacing="4">
+
+                                        <Label Text="{Binding Nombre}"
+                                               TextColor="DeepPink"
+                                               FontSize="16"/>
+
+                                        <Label FontSize="12">
+
+                                            <Label.FormattedText>
+
+                                                <FormattedString>
+
+                                                    <Span Text="{Binding Sabor}"
+                                                          TextColor="LightPink"/>
+
+                                                    <Span Text=", "
+                                                          TextColor="LightPink"/>
+
+                                                    <Span Text="{Binding Agegado}"
+                                                          TextColor="LightPink"/>
+
+                                                </FormattedString>
+
+                                            </Label.FormattedText>
+
+                                        </Label>
+
+                                    </VerticalStackLayout>
+
+                                    <Label Grid.Column="2"
+                                           Text="{Binding PrecioTotal, StringFormat='{0:C}'}"
+                                           TextColor="AliceBlue"
+                                           VerticalOptions="Center"
+                                           FontSize="15"
+                                           FontAttributes="Bold"/>
+
+                                </Grid>
+
+                            </StackLayout>
+                        </StackLayout>
+                        
+                    </DataTemplate>
+
+                </CollectionView.ItemTemplate>
+                
+            </CollectionView>
+            
+        </ScrollView>
+
+        <ActivityIndicator IsRunning="{Binding EstaDisponible}"/>
+    </Grid>
+    
+</ContentPage>

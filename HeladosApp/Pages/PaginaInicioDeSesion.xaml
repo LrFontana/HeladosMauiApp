@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:HeladosApp.ViewModels"
+             x:Class="HeladosApp.Pages.PaginaInicioDeSesion"
+             Title="Iniciar Sesion"
+             Shell.FlyoutBehavior="Disabled"
+             x:DataType="viewModel:AutorizacionViewModel"
+             BackgroundColor="Black">
+
+
+    <Grid>
+        <VerticalStackLayout VerticalOptions="Center"
+                         Padding="20"
+                         Spacing="20">
+
+            <Image Source="heladocuatro.png"
+               HeightRequest="150"
+               WidthRequest="150"
+               Aspect="AspectFit"
+               Margin="0,0,0,50"/>
+            
+            <Entry Text="{Binding Email}"
+               Placeholder="Email"
+               Keyboard="Email"/>
+
+            <Entry Text="{Binding Contraseña}"
+               Placeholder="Contraseña"
+               IsPassword="True"/>
+
+            <Label Text="No tienes un usuario? Registrate"
+               TextColor="White"
+               FontSize="13"
+               FontAttributes="Bold"
+               Margin="0,20,0,10">
+
+                <Label.GestureRecognizers>
+
+                    <TapGestureRecognizer Tapped="LabelRegistrarse_Tapped"/>
+
+                </Label.GestureRecognizers>
+
+            </Label>
+
+            <Button Text="Iniciar Sesion"
+                IsEnabled="{Binding PuedeIniciarSesion}"
+                Command="{Binding IniciarSesionCommand}"
+                    Margin="0,20,0,0"/>
+
+        </VerticalStackLayout>
+
+        <ActivityIndicator IsRunning="{Binding EstaDisponible}"/>
+
+
+    </Grid>
+
+</ContentPage>

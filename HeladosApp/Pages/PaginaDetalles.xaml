@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:HeladosApp.ViewModels"
+             xmlns:dto="clr-namespace:HeladosMaui.Base.DTOs;assembly=HeladosMaui.Base"
+             xmlns:toolKit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:models="clr-namespace:HeladosApp.Models"
+             x:Class="HeladosApp.Pages.PaginaDetalles"
+             Shell.PresentationMode="ModalAnimated"
+             x:DataType="viewModels:DetallesViewModel"
+             BackgroundColor="Black">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="ImageButton" x:Key="botonCantidad">
+                <Setter Property="BackgroundColor" Value="DeepPink"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="HeightRequest" Value="40"/>
+                <Setter Property="WidthRequest" Value="40"/>
+                <Setter Property="CornerRadius" Value="20"/>
+                <Setter Property="Padding" Value="5"/>
+            </Style>            
+        </ResourceDictionary>
+        
+    </ContentPage.Resources>
+
+    <Grid>
+
+        <Grid RowDefinitions="Auto, *, Auto"
+              Padding="10, 30, 10, 10">
+
+            <VerticalStackLayout Grid.Row="0"
+                                 HorizontalOptions="Center"
+                                 Spacing="10">
+
+                <Image Source="{Binding Helado.Imagen}"
+                       HeightRequest="250"
+                       WidthRequest="250"
+                       HorizontalOptions="Center"
+                       Aspect="AspectFit"/>
+
+                <Label Text="{Binding Helado.Nombre}"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       TextColor="DeepPink"/>   
+
+                <Label Text="{Binding Helado.Precio, StringFormat='{0:C}'}"
+                       TextColor="LightPink"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"/>
+
+            </VerticalStackLayout>
+
+            <CollectionView Grid.Row="1"
+                            ItemsSource="{Binding OpcionesHelado}"
+                            VerticalOptions="Center">
+
+                <CollectionView.ItemsLayout>
+
+                    <GridItemsLayout Span="2"
+                                     Orientation="Vertical"
+                                     VerticalItemSpacing="10"
+                                     HorizontalItemSpacing="10"/>
+
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+
+                    <DataTemplate x:DataType="models:OpcionesDeHelado">
+
+                        <Border StrokeShape="RoundRectangle 10"
+                                Stroke="White"
+                                Padding="5">
+                            
+                            
+                            <Border.Triggers>
+
+                                <DataTrigger TargetType="Border"
+                                             Binding="{Binding EstaSeleccionado}"
+                                             Value="True">
+
+                                    <Setter Property="Stroke" Value="DeepPink"/>
+                                    <Setter Property="StrokeThickness" Value="3"/>
+                                </DataTrigger>
+
+                            </Border.Triggers>
+
+                            <VerticalStackLayout Spacing="10">
+
+                                <VerticalStackLayout Spacing="2">
+
+                                    <Label Text="{Binding Sabor}"
+                                           TextColor="DeepPink"
+                                           FontAttributes="Bold"
+                                           FontSize="18"/>
+                                    <Label Text="Sabor"
+                                           TextColor="LightPink"
+                                           FontSize="13"/>
+
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout Spacing="2">
+
+                                    <Label Text="{Binding Agregado}"
+                                           TextColor="DeepPink"
+                                           FontAttributes="Bold"
+                                           FontSize="18"/>
+                                    <Label Text="Topping"
+                                           TextColor="LightPink"
+                                           FontSize="13"/>
+
+                                </VerticalStackLayout>
+
+                            </VerticalStackLayout>
+
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewModels:DetallesViewModel}}, 
+                                                      Path=SeleccionarOpcionesCommand}"
+                                                      CommandParameter="{Binding .}"/>
+                            </Border.GestureRecognizers>
+
+                        </Border>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+            <VerticalStackLayout Grid.Row="2"
+                                 VerticalOptions="End"
+                                 Spacing="25">
+
+                <Grid ColumnDefinitions="*, 100, *">
+
+                    <ImageButton Grid.Column="0"
+                                 Source="menos.png"
+                                 Style="{StaticResource botonCantidad}"
+                                 Command="{Binding DisminuirCantidadCommand}"
+                                 IsEnabled="True">
+
+                        <ImageButton.Behaviors>
+                            <toolKit:IconTintColorBehavior TintColor="White"/>
+                        </ImageButton.Behaviors>
+
+                        <ImageButton.Triggers>
+
+                            <DataTrigger Binding="{Binding Cantidad}"
+                                         Value="0"
+                                         TargetType="ImageButton">
+
+                                <Setter Property="IsEnabled" Value="False"/>
+
+                            </DataTrigger>
+
+                        </ImageButton.Triggers>
+
+                    </ImageButton>
+
+                    <Label Text="{Binding Cantidad}"
+                           Grid.Column="1"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           FontSize="25"
+                           FontAttributes="Bold"
+                           TextColor="White"/>
+
+                    <ImageButton Grid.Column="2"
+                                 Source="mas.png"
+                                 Style="{StaticResource botonCantidad}"
+                                 Command="{Binding IncrementarCantidadCommand}">
+
+                        <ImageButton.Behaviors>
+                            <toolKit:IconTintColorBehavior TintColor="White"/>
+                        </ImageButton.Behaviors>
+
+                    </ImageButton>
+
+                </Grid>
+
+                <Button Text="Agregar al carrito"
+                        Command="{Binding AgregarAlCarritoCommand}"/>
+            </VerticalStackLayout>
+
+        </Grid>
+
+        <ImageButton Source="cancel.png"
+                     HorizontalOptions="Start"
+                     VerticalOptions="Start"
+                     BackgroundColor="DeepPink"
+                     HeightRequest="30"
+                     WidthRequest="30"
+                     CornerRadius="17"
+                     Margin="10,10,0,0"
+                     Command="{Binding IrAtrasCommand}">
+
+            <ImageButton.Shadow>
+                <Shadow/>
+            </ImageButton.Shadow>
+
+            <ImageButton.Behaviors>
+                <toolKit:IconTintColorBehavior TintColor="White"/>
+            </ImageButton.Behaviors>
+        </ImageButton>
+
+    </Grid>
+    
+</ContentPage>
